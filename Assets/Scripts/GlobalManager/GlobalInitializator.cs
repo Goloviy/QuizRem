@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class GlobalInitializator : MonoBehaviourSingleton<GlobalInitializator>
@@ -8,6 +7,7 @@ public class GlobalInitializator : MonoBehaviourSingleton<GlobalInitializator>
     [SerializeField] private TextAsset fastGameQuestions;
     [SerializeField] private TextAsset tutorialQuestion;
     private DataBaseWorker db;
+    public Action InitializationComplete;
     
     protected override void SingletonAwakened()
     {
