@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -59,7 +61,7 @@ public class LoadingScreen : BaseUIScreen
         progressBar.UpdateProgressSmoothly(1, 0.1f, 0.2f);
         OnInitializationComplete();
         
-        CustomLogger.Log("FakeProgress ended");
+        Debug.Log("FakeProgress ended");
     }
 
     public override void ShowScreen(bool _animated = false)

@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MainMenuScreen : MonoBehaviour
+public class MainMenuScreen : BaseUIScreen
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button playGameButton;
+    
+    public Action OnPlayButtonClicked;
+    
+    public override void InitializeView()
     {
-        
+        base.InitializeView();
+      
+        playGameButton.onClick.AddListener(() => { OnPlayButtonClicked?.Invoke(); });
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
