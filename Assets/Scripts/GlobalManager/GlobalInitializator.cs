@@ -1,26 +1,31 @@
 using System;
 using UnityEngine;
 
-public class GlobalInitializator : MonoBehaviourSingleton<GlobalInitializator>
+public class GlobalInitializator : MonoBehaviour
 {
     [SerializeField] private TextAsset questionsDataBase;
     [SerializeField] private TextAsset fastGameQuestions;
     [SerializeField] private TextAsset tutorialQuestion;
-    private DataBaseWorker db;
-    public Action InitializationComplete;
+    [SerializeField] private LoadingScreen loadingScreen;
     
-    protected override void SingletonAwakened()
+    private DataBaseWorker db;
+    public event Action InitializationComplete;
+    
+    protected void Awake()
     {
         Initialize();
     }
 
-    protected void Initialize()
+    private void Initialize()
     {
+        loadingScreen.InitializeView(ref InitializationComplete);
         db = new DataBaseWorker(questionsDataBase.text, fastGameQuestions.text,tutorialQuestion.text, OnDataBaseParsed, ShareResourcesManager.Instance.categoryIcons);
     }
     
     private void OnDataBaseParsed()
     {
-        /*Debug.LogWarning("DatabaseReady");*/
+        InitializationComplete?.Invoke();
+        loadingScreen.Unsubscribe(ref InitializationComplete);
+        Debug.Log("DatabaseReady");
     }
 }

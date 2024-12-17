@@ -407,10 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   returnToPrevScreen: 0
-  controller: {fileID: 385857514}
   progressBar: {fileID: 231924266}
-  hintText: {fileID: 736372786}
-  backgroundButton: {fileID: 354378224}
 --- !u!1 &385857513
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,10 +437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06b8804dd65e3e47b45da84f6ad02c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrintTrace: 0
   questionsDataBase: {fileID: 4900000, guid: 2043fd8f5839fd542989c5ad5f8bd630, type: 3}
   fastGameQuestions: {fileID: 4900000, guid: 7145d8e282c8758499b8b7fe247ee74e, type: 3}
   tutorialQuestion: {fileID: 4900000, guid: 79b741050f8bca645b9f2dbedec4ae11, type: 3}
+  loadingScreen: {fileID: 354378227}
 --- !u!4 &385857515
 Transform:
   m_ObjectHideFlags: 0
@@ -1032,7 +1029,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410784502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22c9aafcfb2abb0449020f5ab965d6ae, type: 3}
   m_Name: 

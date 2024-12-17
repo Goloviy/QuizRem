@@ -26,8 +26,8 @@ public class UIController : MonoBehaviourSingleton<UIController>
         Debug.Log("UIController Awake");
 
         //TODO : Replace with List<BaseUIScreen>
-        loadingScreen.InitializeView();
-        mainMenuScreen.InitializeView();
+        //loadingScreen.InitializeView();
+        //mainMenuScreen.InitializeView();
         
         ShowScreen(loadingScreen);
     }
