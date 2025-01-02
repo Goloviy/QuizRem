@@ -1,5 +1,31 @@
 {
   "dependencies": {
+    "com.coffee.softmask-for-ugui": {
+      "version": "https://github.com/mob-sakai/SoftMaskForUGUI.git?path=Packages/src#3.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "960868ec0786e4d283a5ce8fd988ae79ca91eae8"
+    },
+    "com.coffee.ui-particle": {
+      "version": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "hash": "f4b28b68b1e1367ac7fdc89f1e750ee7a148e325"
+    },
+    "com.coffee.unmask": {
+      "version": "https://github.com/mob-sakai/UnmaskForUGUI.git#1.4.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "33356da2c43fa28397192baee70910c978e3169f"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.2",
       "depth": 1,

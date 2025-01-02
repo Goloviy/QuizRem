@@ -169,11 +169,7 @@ public class DataBaseWorker
     /// </summary>
     private async void CreateQuestionsAsync()
     {
-        await Task.Run(CreateQuestions).ContinueWith(ContinuationAction);
-    }
-
-    private void ContinuationAction(Task _obj)
-    {
+        await Task.Run(CreateQuestions);
         onDatabaseReady?.Invoke();
     }
 
