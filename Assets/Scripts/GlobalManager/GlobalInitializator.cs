@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GlobalInitializator : MonoBehaviour
 {
+    [SerializeField] private GameController gameController;
     [SerializeField] private TextAsset questionsDataBase;
     [SerializeField] private TextAsset fastGameQuestions;
     [SerializeField] private TextAsset tutorialQuestion;

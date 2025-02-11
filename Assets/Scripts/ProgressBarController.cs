@@ -72,7 +72,7 @@ public class ProgressBarController : MonoBehaviour
    /// 
    /// </summary>
    /// <param name="_newProgress"> percents from 0 to 1</param>
-   public void UpdateProgressSmoothly(float _newProgress, float _delay = 0.33f, float _time = 0.5f)
+   public YieldInstruction UpdateProgressSmoothly(float _newProgress, float _delay = 0.33f, float _time = 0.5f)
    {
       Debug.Log("TryKIllTwee");
       currentTween?.Kill();
@@ -87,8 +87,9 @@ public class ProgressBarController : MonoBehaviour
          Debug.Log("NewProgress > 99");
          currentTween.OnComplete(OnProgressBarFilled);
       }
-      
+
       Debug.Log("End UpdateProgressSmoothly");
+      return currentTween.WaitForCompletion();
    }
 
    private void OnProgressBarFilled()

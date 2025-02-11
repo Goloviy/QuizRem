@@ -20,7 +20,6 @@ public class LoadingScreen : BaseUIScreen
     private void OnInitializationComplete()
     {
         initializationComplete = true;
-        HideScreen();
     }
 
     private IEnumerator FakeProgress()
@@ -33,8 +32,8 @@ public class LoadingScreen : BaseUIScreen
             yield return new WaitForSecondsRealtime(0.3f);
         }
 
-        progressBar.UpdateProgressSmoothly(1, 0.1f, 0.2f);
-        OnInitializationComplete();
+        yield return progressBar.UpdateProgressSmoothly(1, 0.1f, 0.2f);
+        HideScreen();
 
         Debug.Log("FakeProgress ended");
     }
