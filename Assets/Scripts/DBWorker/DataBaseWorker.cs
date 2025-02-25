@@ -28,11 +28,10 @@ public class DataBaseWorker
     private List<int> idQuestions;
     private bool isParsingComplete;
 
-    private Action onDatabaseReady;
-
     private Dictionary<KnowledgeCategory, Sprite> categoryIcons;
+    private readonly Task initializationTask;
     
-    public DataBaseWorker(string _questionList, string _fastGameQuestions,string _tutorialQuestions, Action _callback, List<KnowledgeCategoryIcon> _categoryIcons)
+    public DataBaseWorker(string _questionList, string _fastGameQuestions,string _tutorialQuestions,List<KnowledgeCategoryIcon> _categoryIcons)
     {
         //categoryIcons = new Dictionary<KnowledgeCategory, Sprite>(_categoryIcons.Count);
         
@@ -45,10 +44,10 @@ public class DataBaseWorker
         fastGamequestionList = _fastGameQuestions;
         tutorialQuestionList = _tutorialQuestions;
         
-        onDatabaseReady = _callback;
-        
-        CreateQuestionsAsync();
+        initializationTask = CreateQuestionsAsync();
     }
+    
+    public Task WaitForInitialization() => initializationTask;
     
      public void RemoveAnsweredQuestions(List<int> _questions)
     {
@@ -167,10 +166,9 @@ public class DataBaseWorker
     /// <summary>
     /// Asynchronous start "GreateQuestions".
     /// </summary>
-    private async void CreateQuestionsAsync()
+    private async Task CreateQuestionsAsync()
     {
         await Task.Run(CreateQuestions);
-        onDatabaseReady?.Invoke();
     }
 
     /// <summary>

@@ -12,7 +12,6 @@ public class MainMenuScreen : BaseUIScreen
     {
         base.InitializeView();
       
-        playGameButton.onClick.AddListener(() => { OnPlayButtonClicked?.Invoke(); });
+        playGameButton.onClick.AddListener(() =>{OnPlayButtonClicked?.Invoke();});
     }
-    
 }

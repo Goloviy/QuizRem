@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,15 +8,15 @@ public class LoadingScreen : BaseUIScreen
     [SerializeField] private ProgressBarController progressBar;
     private bool initializationComplete;
     private float progress;
-    
-    public void InitializeView(ref Action onLoadingComplete)
+
+    public void InitializeView()
     {
         base.InitializeView();
-        onLoadingComplete += OnInitializationComplete;
         progressBar.InitializeView();
+        ShowScreen(true);
     }
 
-    private void OnInitializationComplete()
+    public void OnInitializationComplete()
     {
         initializationComplete = true;
     }
@@ -45,10 +44,5 @@ public class LoadingScreen : BaseUIScreen
         base.ShowScreen(false);
 
         StartCoroutine(FakeProgress());
-    }
-
-    public void Unsubscribe(ref Action onLoadingComplete)
-    {
-        onLoadingComplete -= OnInitializationComplete;
     }
 }

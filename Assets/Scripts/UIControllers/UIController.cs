@@ -4,34 +4,46 @@ using UnityEngine;
 
 public class UIController : MonoBehaviourSingleton<UIController>
 {
-    [SerializeField] private LoadingScreen loadingScreen;
     [SerializeField] private MainMenuScreen mainMenuScreen;
-    
+    [SerializeField] private GameSessionView gameSessionView;
+    [SerializeField] private GameController gameController;
+
     [Header("Default Screen")] [SerializeField]
     private BaseUIScreen defaultScreen;
+
     //TODO : Find a better way to do this
     private List<BaseUIScreen> screensOrder;
-    
+
     private Stack<BaseUIScreen> screens = new Stack<BaseUIScreen>();
 
     public Action<string> OnShowScreen;
-   
-    protected override void SingletonAwakened()
+    
+    public void Init()
     {
-        base.SingletonAwakened();
+        screensOrder = new List<BaseUIScreen>(4) { mainMenuScreen };
+        mainMenuScreen.InitializeView();
+        gameSessionView.InitializeView();
         
-        screensOrder = new List<BaseUIScreen>(4) {mainMenuScreen};
-       
-        
-        Debug.Log("UIController Awake");
+        Debug.Log("UIController Init");
+    }
 
-        //TODO : Replace with List<BaseUIScreen>
-        //loadingScreen.InitializeView();
-        //mainMenuScreen.InitializeView();
-        
-        ShowScreen(loadingScreen);
+    public void InitSubscriptions()
+    {
+        mainMenuScreen.OnPlayButtonClicked += ShowGameSession;
+        gameController.GameSessionStarted += SetupGameSessionView;
     }
     
+    private void ShowGameSession()
+    {
+        gameController.StartGameSession();
+    }
+    
+    private void SetupGameSessionView()
+    {
+        //staticPanel.gameObject.SetActive(false);
+        ShowScreen(gameSessionView);
+    }
+
     //TODO : Bug - returnToPrevScreen not working
     public void ShowScreen(BaseUIScreen _screen)
     {
@@ -45,6 +57,7 @@ public class UIController : MonoBehaviourSingleton<UIController>
                 OnShowScreen?.Invoke(screen.name);
                 return;
             }
+
             if (!screen.returnToPrevScreen)
             {
                 screens.Pop();
@@ -83,7 +96,7 @@ public class UIController : MonoBehaviourSingleton<UIController>
         screens.Push(_screen);
         _screen.ShowScreen(showAnimated);
     }
-    
+
     public void HideScreen(BaseUIScreen _screen)
     {
         Debug.Log("HideScreen");

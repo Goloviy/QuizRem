@@ -1451,11 +1451,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06b8804dd65e3e47b45da84f6ad02c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 0}
+  loadingScreen: {fileID: 354378227}
+  gameController: {fileID: 385857516}
+  uiController: {fileID: 1410784503}
   questionsDataBase: {fileID: 4900000, guid: 2043fd8f5839fd542989c5ad5f8bd630, type: 3}
   fastGameQuestions: {fileID: 4900000, guid: 7145d8e282c8758499b8b7fe247ee74e, type: 3}
   tutorialQuestion: {fileID: 4900000, guid: 79b741050f8bca645b9f2dbedec4ae11, type: 3}
-  loadingScreen: {fileID: 354378227}
 --- !u!4 &385857515
 Transform:
   m_ObjectHideFlags: 0
@@ -1484,7 +1485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrintTrace: 0
-  playButton: {fileID: 0}
+  session: {fileID: 1085321763}
 --- !u!1 &473065089
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,6 +3314,7 @@ GameObject:
   - component: {fileID: 1085321762}
   - component: {fileID: 1085321761}
   - component: {fileID: 1085321760}
+  - component: {fileID: 1085321763}
   m_Layer: 0
   m_Name: SessionCanvas
   m_TagString: Untagged
@@ -3403,6 +3405,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 3
   m_TargetDisplay: 0
+--- !u!114 &1085321763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085321758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104e455c0bcd14841a9eb01f871dc0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1146802113
 GameObject:
   m_ObjectHideFlags: 0
@@ -9597,14 +9611,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410784502}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22c9aafcfb2abb0449020f5ab965d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PrintTrace: 0
-  loadingScreen: {fileID: 354378227}
   mainMenuScreen: {fileID: 2064664424}
+  gameSessionView: {fileID: 1862233685}
+  gameController: {fileID: 385857516}
   defaultScreen: {fileID: 2064664424}
 --- !u!4 &1410784504
 Transform:
@@ -10705,6 +10720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1862233684}
+  - component: {fileID: 1862233685}
   m_Layer: 0
   m_Name: SessionScreen
   m_TagString: Untagged
@@ -10734,6 +10750,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1862233685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862233683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fade111567eee5443ad438c747ec2e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnToPrevScreen: 0
+  controller: {fileID: 1085321763}
+  questionLabel: {fileID: 965314139}
 --- !u!1 &1917411105
 GameObject:
   m_ObjectHideFlags: 0

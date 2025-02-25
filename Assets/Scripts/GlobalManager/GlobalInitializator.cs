@@ -1,32 +1,34 @@
-using System;
 using UnityEngine;
 
 public class GlobalInitializator : MonoBehaviour
 {
+    [SerializeField] private LoadingScreen loadingScreen;
+    
+    [Header("Controllers")]
     [SerializeField] private GameController gameController;
+    [SerializeField] private UIController uiController;
+    
+    [Header("Question for games")]
     [SerializeField] private TextAsset questionsDataBase;
     [SerializeField] private TextAsset fastGameQuestions;
     [SerializeField] private TextAsset tutorialQuestion;
-    [SerializeField] private LoadingScreen loadingScreen;
-    
+
     private DataBaseWorker db;
-    public event Action InitializationComplete;
     
     protected void Awake()
     {
         Initialize();
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
-        loadingScreen.InitializeView(ref InitializationComplete);
-        db = new DataBaseWorker(questionsDataBase.text, fastGameQuestions.text,tutorialQuestion.text, OnDataBaseParsed, ShareResourcesManager.Instance.categoryIcons);
-    }
-    
-    private void OnDataBaseParsed()
-    {
-        InitializationComplete?.Invoke();
-        loadingScreen.Unsubscribe(ref InitializationComplete);
-        Debug.Log("DatabaseReady");
+        loadingScreen.InitializeView();
+        db = new DataBaseWorker(questionsDataBase.text, fastGameQuestions.text,tutorialQuestion.text, 
+            ShareResourcesManager.Instance.categoryIcons);
+        await db.WaitForInitialization();
+        gameController.Init(db);
+        uiController.Init();
+        uiController.InitSubscriptions();
+        loadingScreen.OnInitializationComplete();
     }
 }
