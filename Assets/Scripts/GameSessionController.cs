@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameSessionController : MonoBehaviour
 {
+    private GameSessionSettings config;
     private List<Question> sessionQuestions;
     private List<Question> questionsForReplace;
     
@@ -14,9 +15,11 @@ public class GameSessionController : MonoBehaviour
     public int answeredQuestionsCount { get; private set; }
     public int maxQuestionsCount => sessionQuestions.Count;
 
-    public void InitializeController()
+    public void InitializeController(GameSessionSettings _config)
     {
         Debug.Log("GameSessionController initialized empty");
+        config = _config;
+        //need  create and init timer
     }
 
     public void InitializeGameSession(List<Question> _mainQuestions, List<Question> _replaceQuestions)

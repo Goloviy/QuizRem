@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviourSingleton<GameController>
 {
+    [SerializeField] private GameSessionSettings sessionSettingsConfig;
     [SerializeField] private GameSessionController session;
-    private int coutQuestion = 3;//temp solution for test 
+    private int coutQuestion = 3; //temp solution for test 
 
     private DataBaseWorker db;
     public Action GameSessionStarted;
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviourSingleton<GameController>
     public void Init(DataBaseWorker _dataBase)
     {
         db = _dataBase;
-        session.InitializeController();
+        session.InitializeController(sessionSettingsConfig);
         Debug.Log("Game Controller Init");
     }
 
@@ -21,12 +22,14 @@ public class GameController : MonoBehaviourSingleton<GameController>
     {
         var sessionQuestions = new List<Question>();
         var replaceQuestions = new List<Question>();
-        for (int i = 0; i < coutQuestion; i++)
+        for (var i = 0; i <sessionSettingsConfig.data.sessionQuestions.Count; i++)
         {
-            sessionQuestions.AddRange(db.GetQuestions(i+1,QuestionType.QuestionMain,3));
-            replaceQuestions.AddRange(db.GetQuestions(i+1,QuestionType.QuestionMain,3));
+            sessionQuestions.AddRange(db.GetQuestions(sessionSettingsConfig.data.sessionQuestions[i].difficulty, 
+                QuestionType.QuestionMain, sessionSettingsConfig.data.sessionQuestions[i].count));
+            replaceQuestions.AddRange(db.GetQuestions(sessionSettingsConfig.data.sessionQuestions[i].difficulty, 
+                QuestionType.QuestionMain, sessionSettingsConfig.data.sessionQuestions[i].count));
         }
-        
+
         session.InitializeGameSession(sessionQuestions, replaceQuestions);
         GameSessionStarted?.Invoke();
         Debug.Log("StartGameSession");
