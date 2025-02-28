@@ -7,10 +7,12 @@ public class GameSessionController : MonoBehaviour
     private GameSessionSettings config;
     private List<Question> sessionQuestions;
     private List<Question> questionsForReplace;
-    
+    //public List<AnsweredQuestionInfo> answeredQuestions { get; private set; }
+
     public Question CurrentQuestion { get; private set; }
     public Action SessionWasInitialized;
     public Action UpdateQuestionInfo;
+    public Action<int, bool> PlayerAnsweredQuestion;
     public Action GameSessionEnd;
     public int answeredQuestionsCount { get; private set; }
     public int maxQuestionsCount => sessionQuestions.Count;
@@ -31,11 +33,19 @@ public class GameSessionController : MonoBehaviour
         ShowNextQuestion();
     }
 
+    public void PlayerChooseAnswer(int _answerID)
+    {
+        var isAnswerCorrect = false;
+
+        isAnswerCorrect = CurrentQuestion.answers[_answerID].isRightOne;
+        PlayerAnsweredQuestion?.Invoke(CurrentQuestion.id, isAnswerCorrect);
+    }
+
     private void ShowNextQuestion()
     {
         if (answeredQuestionsCount >= maxQuestionsCount)
         {
-           GameSessionEnd?.Invoke();
+            GameSessionEnd?.Invoke();
         }
         else
         {

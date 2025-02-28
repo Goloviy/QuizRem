@@ -32,7 +32,7 @@ public class GameSessionView : BaseUIScreen
                 answerViews[i].RecolorAnswer(answerSelected);
             }
         }
-        //controller.PlayerChooseAnswer(_index);
+        controller.PlayerChooseAnswer(_index);
     }
 
     private void SetupSessionInfo()
