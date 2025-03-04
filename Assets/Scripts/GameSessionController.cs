@@ -13,7 +13,9 @@ public class GameSessionController : MonoBehaviour
     public Action SessionWasInitialized;
     public Action UpdateQuestionInfo;
     public Action<int, bool> PlayerAnsweredQuestion;
+    public Action UpdateRewardsInfo;
     public Action GameSessionEnd;
+    public Action<bool> BlockUserInput;
     public int answeredQuestionsCount { get; private set; }
     public int maxQuestionsCount => sessionQuestions.Count;
 
@@ -29,20 +31,52 @@ public class GameSessionController : MonoBehaviour
         sessionQuestions = _mainQuestions;
         questionsForReplace = _replaceQuestions;
         CurrentQuestion = sessionQuestions[0];
+        BlockUserInput?.Invoke(false);
         SessionWasInitialized?.Invoke();
         ShowNextQuestion();
     }
 
     public void PlayerChooseAnswer(int _answerID)
     {
+        BlockUserInput?.Invoke(true);
         var isAnswerCorrect = false;
 
         isAnswerCorrect = CurrentQuestion.answers[_answerID].isRightOne;
+
+        if (isAnswerCorrect)
+        {
+            answeredQuestionsCount++;
+        }
+
         PlayerAnsweredQuestion?.Invoke(CurrentQuestion.id, isAnswerCorrect);
+    }
+
+    public void AnswerDelayOut(bool _answerIsCorrect)
+    {
+        // delaysTimer.ResetTimer(2f, () =>
+        // {
+        //     if (_answerIsCorrect)
+        //     {
+        //         UpdateRewardsInfo?.Invoke();
+        //     }
+        //     else
+        //     {
+        //         GameSessionEnd?.Invoke();
+        //     }
+        // });
+        if (_answerIsCorrect)
+        {
+            UpdateRewardsInfo?.Invoke();
+        }
+        else
+        {
+            GameSessionEnd?.Invoke();
+        }
     }
 
     private void ShowNextQuestion()
     {
+        BlockUserInput?.Invoke(false);
         if (answeredQuestionsCount >= maxQuestionsCount)
         {
             GameSessionEnd?.Invoke();
