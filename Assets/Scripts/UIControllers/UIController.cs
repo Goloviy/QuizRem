@@ -43,6 +43,12 @@ public class UIController : MonoBehaviourSingleton<UIController>
         //staticPanel.gameObject.SetActive(false);
         ShowScreen(gameSessionView);
     }
+    
+    public void  EndGameSession()
+    {
+        //staticPanel.gameObject.SetActive(true);
+        HideScreen(gameSessionView);
+    }
 
     //TODO : Bug - returnToPrevScreen not working
     public void ShowScreen(BaseUIScreen _screen)

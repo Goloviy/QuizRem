@@ -850,7 +850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &354378223
 RectTransform:
   m_ObjectHideFlags: 0
@@ -979,6 +979,7 @@ GameObject:
   - component: {fileID: 385857515}
   - component: {fileID: 385857514}
   - component: {fileID: 385857516}
+  - component: {fileID: 385857517}
   m_Layer: 0
   m_Name: GlobalInitializator
   m_TagString: Untagged
@@ -1034,6 +1035,18 @@ MonoBehaviour:
   PrintTrace: 0
   sessionSettingsConfig: {fileID: 11400000, guid: d0add24cfcad20941b360591f0455d6c, type: 2}
   session: {fileID: 1085321763}
+--- !u!114 &385857517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385857513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ac7e7dc784f9f4b8fa651c0c091927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &386637256
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public abstract class BaseUIScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
-
+    
     public virtual void HideScreen()
     {
         gameObject.SetActive(false);

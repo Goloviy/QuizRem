@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class GameSessionView : BaseUIScreen
         controller.UpdateQuestionInfo += SetupSessionInfo;
         controller.PlayerAnsweredQuestion += OnPlayerAnswered;
         controller.BlockUserInput += BlockerInputStatus;
+        controller.GameSessionEnd += HideScreen;
         for (var i = 0; i < answerViews.Count; i++)
         {
             answerViews[i].InitializeView();
@@ -34,14 +36,7 @@ public class GameSessionView : BaseUIScreen
     
     private void PlayerSelectAnswer(int _index)
     {
-        for (int i = 0; i < answerViews.Count; i++)
-        {
-            if (answerViews[i].answerIndex == _index)
-            {
-                Debug.LogWarning("Player Select");
-                answerViews[i].RecolorAnswer(answerSelected);
-            }
-        }
+        answerViews.FirstOrDefault(answer => answer.answerIndex == _index)?.RecolorAnswer(answerSelected);
         controller.PlayerChooseAnswer(_index);
     }
     

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GameController : MonoBehaviourSingleton<GameController>
 {
@@ -11,11 +13,20 @@ public class GameController : MonoBehaviourSingleton<GameController>
     private DataBaseWorker db;
     public Action GameSessionStarted;
 
+    private Stopwatch stopwatch;
+    
     public void Init(DataBaseWorker _dataBase)
     {
         db = _dataBase;
         session.InitializeController(sessionSettingsConfig);
+        
         Debug.Log("Game Controller Init");
+    }
+
+    private void EndTimer()
+    {
+        stopwatch.Stop();
+        Debug.Log(stopwatch.ElapsedMilliseconds);
     }
 
     public void StartGameSession()

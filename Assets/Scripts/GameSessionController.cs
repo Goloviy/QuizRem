@@ -67,10 +67,14 @@ public class GameSessionController : MonoBehaviour
         if (_answerIsCorrect)
         {
             UpdateRewardsInfo?.Invoke();
+            ShowNextQuestion();
         }
         else
         {
             GameSessionEnd?.Invoke();
+            sessionQuestions = null;
+            questionsForReplace = null;
+            CurrentQuestion = null;
         }
     }
 
