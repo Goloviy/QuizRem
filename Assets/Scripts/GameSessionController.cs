@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using SelfTimer;
 
 public class GameSessionController : MonoBehaviour
 {
     private GameSessionSettings config;
     private List<Question> sessionQuestions;
     private List<Question> questionsForReplace;
+    
     //public List<AnsweredQuestionInfo> answeredQuestions { get; private set; }
 
     public Question CurrentQuestion { get; private set; }
@@ -18,11 +20,14 @@ public class GameSessionController : MonoBehaviour
     public Action<bool> BlockUserInput;
     public int answeredQuestionsCount { get; private set; }
     public int maxQuestionsCount => sessionQuestions.Count;
+    public Timer gameTimer { get; private set; }
 
     public void InitializeController(GameSessionSettings _config)
     {
         Debug.Log("GameSessionController initialized empty");
         config = _config;
+        var time = (long)config.data.mainTimerTime * 1000;
+        gameTimer = TimerManager.Instance.CreateTimer(time, OnTimerEnd);
         //need  create and init timer
     }
 
@@ -33,7 +38,13 @@ public class GameSessionController : MonoBehaviour
         CurrentQuestion = sessionQuestions[0];
         BlockUserInput?.Invoke(false);
         SessionWasInitialized?.Invoke();
+        gameTimer.Start();
         ShowNextQuestion();
+    }
+
+    private void OnTimerEnd()
+    {
+        throw new NotImplementedException();
     }
 
     public void PlayerChooseAnswer(int _answerID)

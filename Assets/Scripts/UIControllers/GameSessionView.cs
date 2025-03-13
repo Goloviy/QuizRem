@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using TMPro;
+using UIControllers;
 using UnityEngine;
 
 public class GameSessionView : BaseUIScreen
@@ -10,6 +11,7 @@ public class GameSessionView : BaseUIScreen
     [SerializeField] private TextMeshProUGUI questionLabel;
     [SerializeField] private List<AnswerView> answerViews;
     [SerializeField] private UIRaycastReceiver uiRaycastBlocker;
+    [SerializeField] private TimerUI timerView;
     
     [SerializeField] private Color answerSelected;
     [SerializeField] private Color answerCorrect;
@@ -22,6 +24,7 @@ public class GameSessionView : BaseUIScreen
         controller.PlayerAnsweredQuestion += OnPlayerAnswered;
         controller.BlockUserInput += BlockerInputStatus;
         controller.GameSessionEnd += HideScreen;
+        controller.gameTimer.OnTimerTick += timerView.UpdateTime;
         for (var i = 0; i < answerViews.Count; i++)
         {
             answerViews[i].InitializeView();
