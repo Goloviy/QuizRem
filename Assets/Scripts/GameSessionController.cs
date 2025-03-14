@@ -27,7 +27,7 @@ public class GameSessionController : MonoBehaviour
         Debug.Log("GameSessionController initialized empty");
         config = _config;
         var time = (long)config.data.mainTimerTime * 1000;
-        gameTimer = TimerManager.Instance.CreateTimer(time, OnTimerEnd);
+        gameTimer = TimerManager.Instance.CreateTimer(time, EndSession);
         //need  create and init timer
     }
 
@@ -42,14 +42,18 @@ public class GameSessionController : MonoBehaviour
         ShowNextQuestion();
     }
 
-    private void OnTimerEnd()
+    private void EndSession()
     {
-        throw new NotImplementedException();
+        GameSessionEnd?.Invoke();
+        sessionQuestions = null;
+        questionsForReplace = null;
+        CurrentQuestion = null;
     }
 
     public void PlayerChooseAnswer(int _answerID)
     {
         BlockUserInput?.Invoke(true);
+        gameTimer.Pause();
         var isAnswerCorrect = false;
 
         isAnswerCorrect = CurrentQuestion.answers[_answerID].isRightOne;
@@ -75,17 +79,35 @@ public class GameSessionController : MonoBehaviour
         //         GameSessionEnd?.Invoke();
         //     }
         // });
+        
+        var tempTimer = TimerManager.Instance.CreateTimer(2000, ()=>
+        {
+            CheckAnswer(_answerIsCorrect);
+        });
+        // if (_answerIsCorrect)
+        // {
+        //     UpdateRewardsInfo?.Invoke();
+        //     ShowNextQuestion();
+        //     gameTimer.ResetTime();
+        // }
+        // else
+        // {
+        //     EndSession();
+        // }
+    }
+
+    private void CheckAnswer(bool _answerIsCorrect)
+    {
+        Debug.Log("CheckAnswer called");
         if (_answerIsCorrect)
         {
             UpdateRewardsInfo?.Invoke();
             ShowNextQuestion();
+            gameTimer.ResetTime();
         }
         else
         {
-            GameSessionEnd?.Invoke();
-            sessionQuestions = null;
-            questionsForReplace = null;
-            CurrentQuestion = null;
+            EndSession();
         }
     }
 
@@ -100,6 +122,7 @@ public class GameSessionController : MonoBehaviour
         {
             CurrentQuestion = sessionQuestions[answeredQuestionsCount];
             UpdateQuestionInfo?.Invoke();
+            
         }
     }
 }

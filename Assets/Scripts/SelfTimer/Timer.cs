@@ -65,6 +65,11 @@ namespace SelfTimer
             onPause = true;
         }
 
+        public void ResetTime()
+        {
+            startTimeMs = GetCurrentTimeMs();
+        }
+
         public void Tick()
         {
             if (onPause) return;

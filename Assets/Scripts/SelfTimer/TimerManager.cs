@@ -25,8 +25,9 @@ namespace SelfTimer
 
         private void Update()
         {
-            foreach (var timer in timers)
+            for (var index = 0; index < timers.Count; index++)
             {
+                var timer = timers[index];
                 timer.Tick();
             }
         }
