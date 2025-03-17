@@ -8,7 +8,7 @@ public class GameSessionController : MonoBehaviour
     private GameSessionSettings config;
     private List<Question> sessionQuestions;
     private List<Question> questionsForReplace;
-    
+
     //public List<AnsweredQuestionInfo> answeredQuestions { get; private set; }
 
     public Question CurrentQuestion { get; private set; }
@@ -53,7 +53,7 @@ public class GameSessionController : MonoBehaviour
     public void PlayerChooseAnswer(int _answerID)
     {
         BlockUserInput?.Invoke(true);
-        gameTimer.Pause();
+        gameTimer.Stop();
         var isAnswerCorrect = false;
 
         isAnswerCorrect = CurrentQuestion.answers[_answerID].isRightOne;
@@ -63,37 +63,15 @@ public class GameSessionController : MonoBehaviour
             answeredQuestionsCount++;
         }
 
-        PlayerAnsweredQuestion?.Invoke(CurrentQuestion.id, isAnswerCorrect);
+        var tempTimer = TimerManager.Instance.CreateTimer((long)(config.data.answerDelayTime * 1000),
+            () => { PlayerAnsweredQuestion?.Invoke(CurrentQuestion.id, isAnswerCorrect); });
+        tempTimer.Start();
     }
 
     public void AnswerDelayOut(bool _answerIsCorrect)
     {
-        // delaysTimer.ResetTimer(2f, () =>
-        // {
-        //     if (_answerIsCorrect)
-        //     {
-        //         UpdateRewardsInfo?.Invoke();
-        //     }
-        //     else
-        //     {
-        //         GameSessionEnd?.Invoke();
-        //     }
-        // });
-        
-        var tempTimer = TimerManager.Instance.CreateTimer(2000, ()=>
-        {
-            CheckAnswer(_answerIsCorrect);
-        });
-        // if (_answerIsCorrect)
-        // {
-        //     UpdateRewardsInfo?.Invoke();
-        //     ShowNextQuestion();
-        //     gameTimer.ResetTime();
-        // }
-        // else
-        // {
-        //     EndSession();
-        // }
+        var tempTimer = TimerManager.Instance.CreateTimer(2000, () => { CheckAnswer(_answerIsCorrect); });
+        tempTimer.Start();
     }
 
     private void CheckAnswer(bool _answerIsCorrect)
@@ -122,7 +100,6 @@ public class GameSessionController : MonoBehaviour
         {
             CurrentQuestion = sessionQuestions[answeredQuestionsCount];
             UpdateQuestionInfo?.Invoke();
-            
         }
     }
 }

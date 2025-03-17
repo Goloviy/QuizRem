@@ -55,7 +55,7 @@ public class GameSessionView : BaseUIScreen
                 if (_result)
                 {
                     answerViews[i].transform.DOPunchScale(new Vector3(.1f, .25f, 0), 0.5f, 1, 0);
-                    //answerViews[i].PlayParticles();
+                    answerViews[i].PlayParticles();
                 }
             }
         }
