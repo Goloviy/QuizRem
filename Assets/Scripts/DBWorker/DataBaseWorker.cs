@@ -31,14 +31,14 @@ public class DataBaseWorker
     private Dictionary<KnowledgeCategory, Sprite> categoryIcons;
     private readonly Task initializationTask;
     
-    public DataBaseWorker(string _questionList, string _fastGameQuestions,string _tutorialQuestions,List<KnowledgeCategoryIcon> _categoryIcons)
+    public DataBaseWorker(string _questionList, string _fastGameQuestions, string _tutorialQuestions, List<KnowledgeCategoryIcon> _categoryIcons)
     {
-        //categoryIcons = new Dictionary<KnowledgeCategory, Sprite>(_categoryIcons.Count);
+        categoryIcons = new Dictionary<KnowledgeCategory, Sprite>(_categoryIcons.Count);
         
-        // for (int i = 0; i < _categoryIcons.Count; i++)
-        // {
-        //     categoryIcons.Add(_categoryIcons[i].category, _categoryIcons[i].icon);
-        // }
+        for (int i = 0; i < _categoryIcons.Count; i++)
+        {
+            categoryIcons.Add(_categoryIcons[i].category, _categoryIcons[i].icon);
+        }
         
         questionList = _questionList;
         fastGamequestionList = _fastGameQuestions;
@@ -131,7 +131,7 @@ public class DataBaseWorker
                 questionList.Shuffle();
                 for (int i = 0; i < _count; i++)
                 {
-                    var index = UnityEngine.Random.Range(0, questionList.Count);
+                    var index = Random.Range(0, questionList.Count);
                     result.Add(questionList[index]);
                     questionList.RemoveAt(index);
                 }
@@ -141,15 +141,12 @@ public class DataBaseWorker
             case QuestionType.QuestionTutorial:
             {
                 _difficultyLevel = Mathf.Clamp(_difficultyLevel, 0, 5);
-                _count = Mathf.Clamp(_count, 0, tutorialQuestions[_difficultyLevel].Count);        
-                //List<Question> questionsLevel = new List<Question>();
-
+                _count = Mathf.Clamp(_count, 0, tutorialQuestions[_difficultyLevel].Count);      
+                
                 var questionList = new List<Question>(tutorialQuestions[_difficultyLevel]);
                 var result = new List<Question>(_count);
-                //questionList.Shuffle();
                 for (int i = 0; i < _count; i++)
                 {
-                    //var index = UnityEngine.Random.Range(0, questionList.Count);
                     result.Add(questionList[0]);
                     if (tutorialQuestions[_difficultyLevel].Contains(questionList[0]))
                     {
@@ -314,7 +311,7 @@ public class DataBaseWorker
             int.TryParse(questionInfo[DIFFICULTY], out var difficulty);
             newQuestion.questionDifficulty = difficulty;
 
-            //newQuestion.categoryIcon = categoryIcons[newQuestion.category];
+            newQuestion.categoryIcon = categoryIcons[newQuestion.category];
 
             return newQuestion;
         }

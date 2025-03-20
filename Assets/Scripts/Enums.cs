@@ -18,6 +18,13 @@ public enum CurrencyType
     Energy
 }
 
+public enum HintsType
+{
+    HalfAnswers,
+    SecondChance,
+    ReplaceQuestion
+}
+
 public enum QuestionType
 {
     QuestionMain,

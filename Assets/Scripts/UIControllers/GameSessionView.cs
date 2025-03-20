@@ -4,6 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UIControllers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSessionView : BaseUIScreen
 {
@@ -12,6 +13,7 @@ public class GameSessionView : BaseUIScreen
     [SerializeField] private List<AnswerView> answerViews;
     [SerializeField] private UIRaycastReceiver uiRaycastBlocker;
     [SerializeField] private TimerUI timerView;
+    [SerializeField] private Image questionCategory;
     
     [SerializeField] private Color answerSelected;
     [SerializeField] private Color answerCorrect;
@@ -70,6 +72,7 @@ public class GameSessionView : BaseUIScreen
     private void ChangeQuestion(Question _currentQuestion)
     {
         questionLabel.text = _currentQuestion.questionText;
+        questionCategory.sprite = _currentQuestion.categoryIcon;
         for (var i = 0; i < answerViews.Count; i++)
         {
             answerViews[i].ShowAnswer();

@@ -8,6 +8,10 @@ public class GameSessionController : MonoBehaviour
     private GameSessionSettings config;
     private List<Question> sessionQuestions;
     private List<Question> questionsForReplace;
+    private InventoryController inventoryController;//todo replace for smth
+    
+    private bool secondChanceActive = false;
+    public int secondAnswerID { get; private set; } = -1;
 
     //public List<AnsweredQuestionInfo> answeredQuestions { get; private set; }
 
@@ -22,9 +26,10 @@ public class GameSessionController : MonoBehaviour
     public int maxQuestionsCount => sessionQuestions.Count;
     public Timer gameTimer { get; private set; }
 
-    public void InitializeController(GameSessionSettings _config)
+    public void InitializeController(GameSessionSettings _config, InventoryController _inventoryController)
     {
         Debug.Log("GameSessionController initialized empty");
+        inventoryController = _inventoryController;
         config = _config;
         var time = (long)config.data.mainTimerTime * 1000;
         gameTimer = TimerManager.Instance.CreateTimer(time, EndSession);
@@ -86,6 +91,30 @@ public class GameSessionController : MonoBehaviour
         else
         {
             EndSession();
+        }
+    }
+
+    public void TryUseHint(HintsType _hint)
+    {
+        if (inventoryController.GetHintCount(_hint) <= 0)
+        {
+            Debug.Log("The hints are over");
+            return;
+        }
+        Debug.LogWarning("Try use hint " + _hint);
+        switch (_hint)
+        {
+            case HintsType.HalfAnswers:
+                break;
+            case HintsType.SecondChance:
+                secondChanceActive = true;
+                secondAnswerID = -1;
+                inventoryController.HintWasUsed(_hint);
+                break;
+            case HintsType.ReplaceQuestion:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(_hint), _hint, null);
         }
     }
 
